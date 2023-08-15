@@ -1,0 +1,30 @@
+.buttonDown{
+    margin-top: 30px;
+    }
+    .nav-navbar .nav-link {
+    color: rgba(255, 255, 255, .5);
+    border-bottom: .25rem solid transparent;
+    }
+
+    .nav-navbar .nav-link:hover,
+    .nav-navbar .nav-link:focus {
+    border-bottom-color: rgba(255, 255, 255, .25);
+    }
+    .navbar-nav { 
+        flex-direction:row !important; }
+
+
+img {
+        width: 100%; /* takes the 100 % width of its container (.box div)*/
+        height: 50%; /* takes the 100 % height of its container (.box div)*/
+        margin-left: auto;
+        margin-right: auto;
+    }
+.imageConstraint{
+    width: 70%;
+    height: 70%;
+}
+.nav-masthead .active {
+    color: #fff;
+    border-bottom-color: #fff;
+    }

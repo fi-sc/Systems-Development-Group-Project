@@ -73,12 +73,12 @@ pip install python-dateutil
 ```
 
 ## ✍🏻 **Developers** 
-* Jack Douet (@jqw2-douet)
+* Jack Douet 
 
-* Troy Akbulut (@t2-akbulut)
+* Troy Akbulut
 
-* Sude Fidan(@s2-fidan)
+* Sude Fidan
 
-* William Barnes(@w2-barnes)
+* William Barnes
 
-* Fiorella Scarpino (@f2-scarpino)
+* Fiorella Scarpino

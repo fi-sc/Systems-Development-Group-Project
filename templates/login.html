@@ -1,0 +1,39 @@
+{% include "base.html" %}
+{% block content %}
+
+<div class="centreContent">
+  <div class="container pt-5 ">
+    <div class="text-white bg-dark mb-3" style="max-width: 26rem;">
+      <div class="card-header">
+        <h1>Login</h1>
+      </div>
+      <div class="card-body">
+        <form action="{{ url_for('login')}}" method="post">
+          <div class="row g-3">
+            <div class="col">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" placeholder="Username" aria-label="Username" id="username"
+                name="username" required>
+            </div>
+            <div class="col">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" placeholder="Password" aria-label="Password" id="password"
+                name="password" required>
+            </div>
+            <button type="submit" class="btn btn-info">Login</button>
+            <div class="col-12"> 
+              <a href="/register" role="button" class="btn btn-secondary">Register</a>
+            </div>
+            <div class="errorMessage">
+              <div class="textCentre">
+                {{msg}}
+              </div>
+            </div>
+
+          </div>
+      </div>
+    </div>
+
+    {% endblock %}
+    <p><br></p>
+    {% include "footer.html" %}

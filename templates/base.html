@@ -1,0 +1,53 @@
+<!-- Template which all other HTML pages are built off, this removes redundancies-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <style>
+        </style>
+        <link href="{{ url_for('static', filename='styles/homepage.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='styles/navbar.css') }}" rel="stylesheet">
+    </head>
+    <body class="text-bg-dark text-center">
+        <!-- Navbar Implementation -->
+        <nav class="navbar p-2">
+            <div class="navbar-nav">
+              <nav class="nav nav-masthead justify-content-center float-md-end">
+              <a class="nav-item nav-link px-2" href="/">Home</a>
+              <a class="nav-item nav-link px-2" href="/players">Players</a>
+              <a class="nav-item nav-link px-2" href="/playerCompare">Player Comparison</a></div>
+            <div  class="navbar-nav ms-auto">
+              <nav class="nav nav-masthead justify-content-center float-md-end">
+
+
+              
+              {%if loggedIn == False%}
+                <a class="nav-item nav-link px-2" href="/login">Login</a>
+              {%endif%}
+              {%if loggedIn == True%}
+                <a class="nav-item nav-link px-2" href="/profile">Profile</a>
+              {%endif%}
+              {%if isAdmin == True%}
+              <a class="nav-item nav-link px-2" href="/admin">Admin</a>
+              {%endif%}
+              {%if loggedIn == True%}
+              <a class="nav-item nav-link px-2" href="/logout">Logout</a>
+              {%endif%}
+
+            </div>
+      </nav>
+        <!-- All other pages use the content block to put page content onto the template -->
+        <div class="container">
+        {% block content %}
+        {% endblock %}
+    
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+
+  </html>

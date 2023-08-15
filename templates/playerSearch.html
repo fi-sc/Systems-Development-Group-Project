@@ -1,0 +1,155 @@
+<!-- Page to show the results of a user's search for a player-->
+{% include "base.html" %}
+
+{% block content %}
+
+      <main>
+        <h1>{{player.getName()}}</h1>
+
+          <div class="buttonDown">
+
+              <div class="row align-items-md-stretch">
+
+                  <div class="col-md-3">
+                  <div class="h-100 p-5 text-bg-dark border rounded-3">
+                      <div>
+                      <img src="{{ url_for('static', filename='images/' ~ player.getGender() ~ '.png') }}"/>
+                      </div>
+                      <p style="padding-top: 20%;">Date Of Birth/Age: {{player.getDateOfBirth()}} ({{player.getAge()}})</p>
+                      <p>Gender: {{player.getGender()}}</p>
+                      {%if loggedIn == True%}
+                      <form id="cancelForm" action="/profile" method="post">
+                        <button type="submit" onclick="addNew('{{player.name}}')" class="btn btn-success"
+                          data-bs-toggle="...modal" data-bs-target=".#exampleModal">Add To Favourites</button>
+                      </form>
+                      {%endif%}
+                      </div>
+                  </div>
+
+                  <div class="col-md-5">
+
+                  <div class="h-100 p-5 bg-dark border rounded-3">
+                      <h2>Player Stats</h2>
+                      <br></br>
+                      <p>Date Signed: {{ player.getDateSigned() }}</p>
+                      <p>Current Team: {{player.getClub()}}</p>
+                      <p>Team Location: {{player.getLocation()}}</p>
+                      <p>Team Manager: {{player.getManager()}}</p>
+                      <p>Salary: £{{player.getSalary()}}k </p>
+                      <p>Games Played: {{player.getPlayed()}}</p>
+                      <p>Games Won: {{player.getWins()}}</p>
+                      <br></br>
+                      <h2>Initial Transfer Value: £{{transferValue}}</h2>
+
+                      <table class="table table-striped table-dark">
+                        <thead class="thead">
+                          <tr>
+                            <th scope="col">Game Number</th>
+                            <th scope="col">Current Value (£k)</th>
+                            <th scope="col">Change in Value(£k)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {%set count = namespace(value=1)%}
+                          {% for key, value in playerPrediction.items() %}
+                          <tr>
+                            <th scope="row">{{count.value}}</th>
+                            <td>{{key}}</td>
+                            <td>{{value}}</td>
+                          </tr>
+                          {% set count.value = count.value + 1 %}
+                          {% endfor %}
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                      <div class="h-100 p-5 bg-dark border rounded-3">
+                        <h2>Graph Of Performance</h2>
+                        <div>
+                          <canvas id="lineChart"></canvas>
+                        </div>
+                        <br>
+                        <div class="imageConstraint">
+                          <canvas id="pieChart"></canvas> 
+                        </div>
+                        
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                      
+
+                        <script>
+                          const ctx = document.getElementById('lineChart').getContext("2d"); //line
+                          const ctx2 = document.getElementById('pieChart').getContext("2d");// pie
+                          
+                          //what tf is this squiggle
+                          var labels = JSON.parse({{ xlabels | tojson }});
+                          var pieLabels = JSON.parse({{ labels | tojson }});
+                          var playersData = JSON.parse({{ data1 | tojson }});
+                          var averageData = JSON.parse({{ data2 | tojson }});
+                          var sizes = JSON.parse({{ sizes | tojson }});
+
+                          new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                              labels: labels,
+                              datasets: [{
+                                label: 'Players',
+                                data: playersData,
+                                borderWidth: 1,
+                                borderColor: '#61f25c',
+                                backgroundColor: '#61f25c'
+                              },
+                              {
+                                label: 'Average',
+                                data: averageData,
+                                borderWidth: 1,
+                                borderColor: '#faae34',
+                                backgroundColor: '#faae34'
+                              }]
+                            },
+                          });
+
+                          new Chart (ctx2, {
+                            type: 'pie',
+                            data: {
+                              labels: pieLabels,
+                              datasets: [
+                                {
+                                  data: sizes,
+                                }],
+                            options: {
+                              layout: {
+                                  borderWidth: 5
+                              }}
+                            }});
+
+                        </script> 
+                      </div>
+                    </div>
+              </div>
+          </div>
+      </main>
+      <script>
+
+
+        var x;
+        function addNew(x) {
+          if (confirm("Are you sure you would like to Add This Player?") == true) {
+            const request = new XMLHttpRequest()
+            request.open('POST', `/addNewFavorite/${JSON.stringify(x)}`)
+            request.onload = () => {
+              const flaskMessage = request.responseText
+              console.log(flaskMessage)
+            }
+            request.send()
+          }
+        }
+  
+    
+    
+      </script>
+{% endblock %}
+<p><br></p>
+{% include "footer.html" %}

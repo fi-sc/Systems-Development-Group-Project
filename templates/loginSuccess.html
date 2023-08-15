@@ -1,0 +1,109 @@
+{% include "base.html" %}
+{% block content %}
+
+<h1>Favorite Players</h1>
+    <table class="table table-striped table-dark text-center">
+        <thead class="thead">
+            <tr>
+                <th scope="col">Player Name</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Club</th>
+                <th scope="col">Club Location</th>
+                <th scope="col">Club Manager</th>
+                <th scope="col">Date Signed</th>
+                <th scope="col">Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in allPlayers %}
+            <tr>
+                <form method="POST">
+                    <td>
+                        <input type="submit" class="submit" id="playerName" name="playerName" placeholder=""
+                            value="{{player.getName()}}">
+                    </td>
+                    <td>
+                        <input type="hidden" class="submit" id="playerName" name="playerName" placeholder=""
+                            value="{{player.getName()}}">
+                        <input type="submit" class="submit" id="dateOfBirth" name="dateOfBirth" placeholder=""
+                            value="{{player.getDateOfBirth()}} ({{player.getAge()}})">
+                    </td>
+                    <td>
+                        <input type="hidden" class="submit" id="playerName" name="playerName" placeholder=""
+                            value="{{player.getName()}}">
+                        <input type="submit" class="submit" id="gender" name="gender" placeholder=""
+                            value="{{player.getGender()}}">
+
+                    </td>
+                    <td>
+                        <input type="hidden" class="submit" id="playerName" name="playerName" placeholder=""
+                            value="{{player.getName()}}">
+                        <input type="submit" class="submit" id="currentTeam" name="currentTeam" placeholder=""
+                            value="{{player.getClub()}}">
+
+                    </td>
+                    <td>
+                        <input type="hidden" class="submit" id="playerName" name="playerName" placeholder=""
+                            value="{{player.getName()}}">
+                        <input type="submit" class="submit" id="teamLocation" name="teamLocation" placeholder=""
+                            value="{{player.getLocation()}}">
+
+                    </td>
+                    <td>
+                        <input type="hidden" class="submit" id="playerName" name="playerName" placeholder=""
+                            value="{{player.getName()}}">
+                        <input type="submit" class="submit" id="teamManager" name="teamManager" placeholder=""
+                            value="{{player.getManager()}}">
+
+                    </td>
+                    <td>
+                        <input type="hidden" class="submit" id="playerName" name="playerName" placeholder=""
+                            value="{{player.getName()}}">
+                        <input type="submit" class="submit" id="dateSigned" name="dateSigned" placeholder=""
+                            value="{{player.getDateSigned()}}">
+
+                    </td>
+                    <td>
+                        <input type="hidden" class="submit" id="playerName" name="playerName" placeholder=""
+                            value="{{player.getName()}}">
+                        <input type="submit" class="submit" id="salary" name="salary" placeholder=""
+                            value="£{{player.getSalary()}}k">
+
+                    </td>
+                </form>
+
+                <td>
+                    <form id="cancelForm" action="/profile" method="post">
+                        <button type="submit" onclick="removeFave('{{player.name}}')" class="btn btn-danger"
+                        data-bs-toggle="...modal" data-bs-target=".#exampleModal">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    <p><br></p>
+    <script>
+
+
+        var x;
+        function removeFave(x) {
+          if (confirm("Are you sure you would like to remove This Player?") == true) {
+            const request = new XMLHttpRequest()
+            request.open('POST', `/removeFave/${JSON.stringify(x)}`)
+            request.onload = () => {
+              const flaskMessage = request.responseText
+              console.log(flaskMessage)
+            }
+            request.send()
+          }
+        }
+  
+    
+    
+      </script>
+{% endblock %}
+<p><br></p>
+{% include "footer.html" %}

@@ -1,0 +1,49 @@
+<!-- First page that the user lands on, shows navbar and search function.-->
+{% include "base.html" %}
+<!-- {% block title %} Players R Us {% endblock title %} -->
+{% block content %}
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<div class="content container pt-5">
+  <div class="row"></div>
+
+
+
+  <div class="row">
+    <div class="col-12 card-header"></div>
+    <h1>Players R Us</h1>
+
+    <h2>Football Searcher</h2>
+
+    <div class="card-body">
+      <form method="POST">
+        <select class="form-control" id="playerName" name="playerName">
+          {% for player in players %}
+            <option value="{{player.getName()}}">{{player.getName()}}</option>
+          {% endfor %}
+        </select>
+
+        <br>
+
+        <div>
+        <input type="submit" name="submit" id="submit" class="btn btn-light">
+      </div>
+
+    </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% include "footer.html" %}

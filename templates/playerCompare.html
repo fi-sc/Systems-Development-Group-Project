@@ -1,0 +1,44 @@
+<!-- Page to select two players to compare-->
+{% include "base.html" %}
+
+{% block content %}
+
+    <div class="centreContent">
+        <div class="container pt-5">
+            <div class="text-white bg-dark mb-3" style="max-width: 26rem;">
+                <div class="card-header"><h1>Choose Two Players to Compare</h1></div>
+
+                <div class="card-body">
+                <form action="playerComparison" method="post">
+                    <div class="row g-3">
+
+                        <div class="col">
+                            <select name="playerOne" id="playerOne" class="form-control">
+                                {% for player in players %}
+                                <option value="{{player.getName()}}">{{player.getName()}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <select name="playerTwo" id="playerTwo" class="form-control">
+                                {% for player in players %}
+                                    <option value="{{player.getName()}}">{{player.getName()}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-12">
+                            <input type="submit" name="submit" id="submit" class="btn btn-light">
+                        </div>
+
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+<p><br></p>
+{% include "footer.html" %}

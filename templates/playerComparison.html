@@ -1,0 +1,147 @@
+{% include "base.html" %}
+
+{% block content %}
+        <div class="container">
+            <div class="text-white bg-dark mb-3 mx-auto">
+                <div class="row"><h1> {{playerOne.getName()}} VS {{playerTwo.getName()}}</h1> </div>
+                    <div class="row">
+
+                        <div class="col">
+                            <h2>{{playerOne.getName()}}</h2>
+                            <div>
+                                <img src="{{ url_for('static', filename='images/' ~ playerOne.getGender() ~ '.png') }}"/>
+                            </div>
+                            <h2>Initial Transfer Value: £{{transferValueOne}}</h2>
+
+                            <p style="padding-top: 0%;">Date Of Birth/Age: {{playerOne.getDateOfBirth()}} ({{playerOne.getAge()}})</p>
+                            <p>Gender: {{playerOne.getGender()}}</p>
+
+                            <h3>Player Stats</h3>
+                            <p>Date Signed: {{ playerOne.getDateSigned() }}</p>
+                            <p>Current Team: {{playerOne.getClub()}}</p>
+                            <p>Team Location: {{playerOne.getLocation()}}</p>
+                            <p>Team Manager: {{playerOne.getManager()}}</p>
+                            <p>Salary: £{{playerOne.getSalary()}}k </p>
+                            <p>Games Played: {{playerOne.getPlayed()}}</p>
+                            <p>Games Won: {{playerOne.getWins()}}</p>
+                                                </div>
+
+                        <div class="col">
+                            <table class="table table-striped table-dark">
+                                <thead class="thead">
+                                  <tr>
+                                    <th scope="col">Game Number</th>
+                                    <th scope="col">Current Value {{playerOne.getName()}} (£k)</th>
+                                    <th scope="col">Change in Value {{playerOne.getName()}} (£k)</th>
+                                    <th scope="col">Current Value {{playerTwo.getName()}} (£k)</th>
+                                    <th scope="col">Change in Value {{playerTwo.getName()}} (£k)</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {%set count = namespace(value=1)%}
+                                  {% for (key, value), (key2, value2) in zip(playerOnePrediction.items(), playerTwoPrediction.items()) %}
+                                  <tr>
+                                    <th scope="row">{{count.value}}</th>
+                                    <td>{{key}}</td>
+                                    <td>{{value}}</td>
+                                    <td>{{key2}}</td>
+                                    <td>{{value2}}</td>
+                                  </tr>
+                                  {% set count.value = count.value + 1 %}
+                                  {% endfor %}
+                                </tbody>
+                              </table>
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                            
+                            <div class="h-0 p-5 bg-dark border rounded-3" style="height: 40%;">
+                                <h2>Performance Graphs</h2>
+                                <div>
+                                    <canvas id="lineChart"></canvas>
+                                </div>
+                                <br>
+                                <div>
+                                    <h3>{{playerOne.name}}</h3>
+                                    <canvas id="pieChart"></canvas> 
+                                    <h3>{{playerTwo.name}}</h3>
+                                    <canvas id="pieChartTwo"></canvas> 
+                                </div>
+                                <script>
+                                    const ctxOne = document.getElementById('lineChart').getContext("2d"); //line
+                      
+
+                                    var labelsX = JSON.parse({{ xlabels | tojson }});
+                                    var pieLabels = JSON.parse({{ labels | tojson }});
+                                    var playerOneData = JSON.parse({{ dataOne1 | tojson }});
+                                    var playerTwoData = JSON.parse({{ dataTwo1 | tojson }});
+                                    var averageDataOne = JSON.parse({{ data2 | tojson }});
+                                    var sizesOne = JSON.parse({{ sizesOne | tojson }});
+                                    var sizesTwo = JSON.parse({{ sizesTwo | tojson }});
+                                    
+
+                                    new Chart(ctxOne, {
+                                        type: 'line',
+                                        data: {
+                                            labels: labelsX,
+                                            datasets: [{
+                                                label: "Player 1",
+                                                data: playerOneData,
+                                                borderWidth: 1,
+                                                borderColor: '#61f25c',
+                                                backgroundColor: '#61f25c'
+                                            },{
+                                                label: "Player 2",
+                                                data: playerTwoData,
+                                                borderWidth: 1,
+                                                borderColor: '#880808',
+                                                backgroundColor: '#880808'
+                                            },{
+                                                label: "Average",
+                                                data: averageDataOne,
+                                                borderWidth: 1,
+                                                borderColor: '#faae34',
+                                                backgroundColor: '#faae34'
+                                            }]
+                                        },
+                                    });
+                                    
+
+   
+                                </script>
+
+                            </div>
+
+
+
+                        </div>
+                        <div class="col">
+                            <h2>{{playerTwo.getName()}}</h2>
+                            <div>
+                                <img src="{{ url_for('static', filename='images/' ~ playerTwo.getGender() ~ '.png') }}"/>
+                            </div>
+                            <h2>Initial Transfer Value: £{{transferValueTwo}}</h2>
+
+                            <p style="padding-top: 0%;">Date Of Birth/Age: {{playerTwo.getDateOfBirth()}} ({{playerTwo.getAge()}})</p>
+                            <p>Gender: {{playerTwo.getGender()}}</p>
+
+                            <h3>Player Stats</h3>
+                            <p>Date Signed: {{ playerTwo.getDateSigned() }}</p>
+                            <p>Current Team: {{playerTwo.getClub()}}</p>
+                            <p>Team Location: {{playerTwo.getLocation()}}</p>
+                            <p>Team Manager: {{playerTwo.getManager()}}</p>
+                            <p>Salary: £{{playerTwo.getSalary()}}k </p>
+                            <p>Games Played: {{playerTwo.getPlayed()}}</p>
+                            <p>Games Won: {{playerTwo.getWins()}}</p>
+                        
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+<p><br></p>
+{% include "footer.html" %}

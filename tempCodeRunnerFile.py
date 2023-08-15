@@ -1,0 +1,1 @@
+loggedIn=loggedIn, isAdmin=isAdmin

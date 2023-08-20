@@ -17,7 +17,7 @@
 
 **Username: sdWork**
 
-**Password: HT8wxqxhjLSVLm3@**
+**Password: **
 
 ## 🖇️ **Login Details**
 
